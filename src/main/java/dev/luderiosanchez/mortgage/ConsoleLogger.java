@@ -33,7 +33,7 @@ public class ConsoleLogger implements Logger{
 
     private static String formatMessage(LogType type, String message, Object data) {
         if (data != null) {
-            return "[" + type + "] " + message + ". | " + "{" + "type: " + type + "," + "data: " + data + "}";
+            return "[" + type + "] " + message + ". | " + "{" + "type: " + type + ", " + "data: " + data + "}";
         } else {
             return formatMessage(type, message);
         }
