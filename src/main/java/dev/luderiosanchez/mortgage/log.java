@@ -44,7 +44,7 @@ public class log implements logger{
         throw new RuntimeException(output);
     }
 
-    private  static String formatMessage(LogType type, String message) {
+    private static String formatMessage(LogType type, String message) {
         return "[" + type + "] " + message + ".";
     }
 }
