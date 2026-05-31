@@ -7,8 +7,8 @@ import java.util.Locale;
 public class MortgageCalculator {
     final static byte MONTHS_IN_A_YEAR = 12;
     final static byte PERCENT = 100;
-    private NumberFormat currency;
 
+    private NumberFormat currency;
     private double principal;
     private float annualInterest;
     private byte period;
@@ -17,11 +17,10 @@ public class MortgageCalculator {
         this.principal = principal;
         this.annualInterest = annualInterest;
         this.period = period;
-
-        currency = NumberFormat.getCurrencyInstance(Locale.of("en", "PH"));
     }
 
-    public MortgageCalculator() {
+    public MortgageCalculator(String language, String country) {
+        this.currency = NumberFormat.getCurrencyInstance(Locale.of(language, country));
     }
 
     public String calculateMortgage() {

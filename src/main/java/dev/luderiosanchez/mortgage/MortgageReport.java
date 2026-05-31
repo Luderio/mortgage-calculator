@@ -1,8 +1,6 @@
 package dev.luderiosanchez.mortgage;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class MortgageReport {
