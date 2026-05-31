@@ -3,9 +3,12 @@ package dev.luderiosanchez.mortgage;
 import java.util.Scanner;
 
 public class MortgageUtils {
+
     private static final ConsoleLogger log = new ConsoleLogger();
 
-    public static Number inputValidator(int min, int max, String fieldName, Scanner scanner) {
+    public static Number inputValidator(int min, int max, String fieldName) {
+        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.print(fieldName + ": ");
             switch (fieldName) {
@@ -34,7 +37,7 @@ public class MortgageUtils {
                         return period;
                     }
                 default:
-                    log.warning("Enter a value between" + min + " and " + max + ".");
+                    log.warning("Invalid Field Added. Please make sure that you added a correct field.");
             }
         }
     }

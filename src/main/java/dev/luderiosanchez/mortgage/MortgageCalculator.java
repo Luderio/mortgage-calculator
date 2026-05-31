@@ -19,11 +19,10 @@ public class MortgageCalculator {
     public static String getMortgage() {
         System.out.println("Mortgage Calculator");
         System.out.println("------------------------------------");
-        Scanner scanner = new Scanner(System.in);
 
-        double principal = (double) MortgageUtils.inputValidator(1_000, 1_000_000, "Principal", scanner);
-        float annualInterest = (float) MortgageUtils.inputValidator(0, 30, "Annual Interest", scanner);
-        byte period = (byte) MortgageUtils.inputValidator(1, 30, "Period (in years)", scanner);
+        double principal = (double) MortgageUtils.inputValidator(1_000, 1_000_000, "Principal");
+        float annualInterest = (float) MortgageUtils.inputValidator(0, 30, "Annual Interest");
+        byte period = (byte) MortgageUtils.inputValidator(1, 30, "Period (in years)");
 
         String monthlyPayments = calculateMortgage(principal, annualInterest, period);
         StringBuilder paymentSchedule = getPaymentSchedule(principal, annualInterest, period);
