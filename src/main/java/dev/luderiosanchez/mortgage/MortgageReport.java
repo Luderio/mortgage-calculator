@@ -49,34 +49,14 @@ public class MortgageReport {
         }
     }
 
-    public void getMonthlyPayments() {
+    public void printMonthlyPayments() {
         String monthlyPayments = calculator.calculateMortgage();
         System.out.println("------------------------------------ \n Monthly Payments: " + monthlyPayments);
     }
 
-    public void getPaymentSchedule() {
-        /**
-         * formula: B = L[(1+c)^n - (1+c)^p]/[(1+c)^n-1]
-         * where:
-         * B = Loan Balance
-         * L = Loan amount/Principal
-         * c = monthly interest
-         * n = number of payments
-         * p = number of payments made/paid
-         **/
-
-        double monthlyInterest = calculator.getMonthlyInterest();
-        int numberOfPayments = calculator.getNumberOfPayments();
-        int numberOfPaymentsMade = 1;
-        ArrayList<String> paymentSchedule = new ArrayList<>();
+    public void printPaymentSchedule() {
+        ArrayList<String> paymentSchedule = calculator.getPaymentSchedule();
         StringBuilder result = new StringBuilder();
-
-        while (numberOfPaymentsMade < numberOfPayments + 1) {
-            double loanBalance = calculator.getPrincipal() * (Math.pow((1 + monthlyInterest), numberOfPayments) - Math.pow((1 + monthlyInterest), numberOfPaymentsMade)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
-            paymentSchedule.add(NumberFormat.getCurrencyInstance(Locale.of("en", "PH")).format(loanBalance));
-             numberOfPaymentsMade++;
-
-        }
 
         for (int i = 0; i < paymentSchedule.toArray().length; i++) {
             result.append("payment ").append(i + 1).append(": ").append(paymentSchedule.toArray()[i]).append("\n");
