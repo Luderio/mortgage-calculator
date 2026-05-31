@@ -7,15 +7,12 @@ import java.util.Scanner;
 
 public class MortgageReport {
 
-    private static final ConsoleLogger log = new ConsoleLogger();
+    private final MortgageCalculator calculator;
     private static final Scanner scanner = new Scanner(System.in);
-    private MortgageCalculator calculator;
+    private static final ConsoleLogger log = new ConsoleLogger();
 
     public MortgageReport(MortgageCalculator calculator) {
         this.calculator = calculator;
-    }
-
-    public MortgageReport() {
     }
 
     public static Number inputValidator(int min, int max, String fieldName) {
@@ -68,11 +65,8 @@ public class MortgageReport {
          * p = number of payments made/paid
          **/
 
-        final byte MONTHS_IN_A_YEAR = 12;
-        final byte PERCENT = 100;
-
-        double monthlyInterest = (calculator.getAnnualInterest() / PERCENT) / MONTHS_IN_A_YEAR;
-        int numberOfPayments = calculator.getPeriod() * MONTHS_IN_A_YEAR;
+        double monthlyInterest = calculator.getMonthlyInterest();
+        int numberOfPayments = calculator.getNumberOfPayments();
         int numberOfPaymentsMade = 1;
         ArrayList<String> paymentSchedule = new ArrayList<>();
         StringBuilder result = new StringBuilder();

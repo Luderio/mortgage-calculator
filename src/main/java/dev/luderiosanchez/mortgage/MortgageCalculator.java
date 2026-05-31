@@ -4,6 +4,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class MortgageCalculator {
+    final static byte MONTHS_IN_A_YEAR = 12;
+    final static byte PERCENT = 100;
+
     private double principal;
     private float annualInterest;
     private byte period;
@@ -18,28 +21,14 @@ public class MortgageCalculator {
     }
 
     public String calculateMortgage() {
-        final byte MONTHS_IN_A_YEAR = 12;
-        final byte PERCENT = 100;
 
-       double monthlyInterest = (annualInterest / PERCENT) / MONTHS_IN_A_YEAR;
-       int numberOfPayments = period * MONTHS_IN_A_YEAR;
+       double monthlyInterest = getMonthlyInterest();
+       int numberOfPayments = getNumberOfPayments();
        double mortgage = principal * (monthlyInterest * Math.pow((1 + monthlyInterest), numberOfPayments)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
        return NumberFormat.getCurrencyInstance(Locale.of("en", "PH")).format(mortgage);
     }
 
-    public double getPrincipal() {
-        return principal;
-    }
-
-    public float getAnnualInterest() {
-        return annualInterest;
-    }
-
-    public byte getPeriod() {
-        return period;
-    }
-
-        public void getMortgage() {
+    public void getMortgage() {
         System.out.println("Mortgage Calculator");
         System.out.println("------------------------------------");
 
@@ -47,11 +36,21 @@ public class MortgageCalculator {
         float annualInterest = (float) MortgageReport.inputValidator(0, 30, "Annual Interest");
         byte period = (byte) MortgageReport.inputValidator(1, 30, "Period (in years)");
 
-            var calculator = new MortgageCalculator(principal, annualInterest, period);
-            var mortgage = new MortgageReport(calculator);
-            mortgage.getMonthlyPayments();
-            mortgage.getPaymentSchedule();
+        var mortgage = new MortgageCalculator(principal, annualInterest, period);
+        var mortgageDetails = new MortgageReport(mortgage);
+        mortgageDetails.getMonthlyPayments();
+        mortgageDetails.getPaymentSchedule();
     }
 
+    public float getMonthlyInterest() {
+        return (annualInterest / PERCENT) / MONTHS_IN_A_YEAR;
+    }
 
+    public int getNumberOfPayments() {
+        return period * MONTHS_IN_A_YEAR;
+    }
+
+    public double getPrincipal() {
+        return principal;
+    }
 }
