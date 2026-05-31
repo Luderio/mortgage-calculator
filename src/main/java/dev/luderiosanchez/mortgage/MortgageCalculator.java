@@ -7,6 +7,7 @@ import java.util.Locale;
 public class MortgageCalculator {
     final static byte MONTHS_IN_A_YEAR = 12;
     final static byte PERCENT = 100;
+    private NumberFormat currency;
 
     private double principal;
     private float annualInterest;
@@ -16,15 +17,18 @@ public class MortgageCalculator {
         this.principal = principal;
         this.annualInterest = annualInterest;
         this.period = period;
+
+        currency = NumberFormat.getCurrencyInstance(Locale.of("en", "PH"));
     }
 
-    public MortgageCalculator() {}
+    public MortgageCalculator() {
+    }
 
     public String calculateMortgage() {
        double monthlyInterest = getMonthlyInterest();
        int numberOfPayments = getNumberOfPayments();
        double mortgage = principal * (monthlyInterest * Math.pow((1 + monthlyInterest), numberOfPayments)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
-       return NumberFormat.getCurrencyInstance(Locale.of("en", "PH")).format(mortgage);
+       return currency.format(mortgage);
     }
 
     public ArrayList<String> getPaymentSchedule() {
@@ -46,7 +50,7 @@ public class MortgageCalculator {
 
         while (numberOfPaymentsMade < numberOfPayments + 1) {
             double loanBalance = getPrincipal() * (Math.pow((1 + monthlyInterest), numberOfPayments) - Math.pow((1 + monthlyInterest), numberOfPaymentsMade)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
-            paymentSchedule.add(NumberFormat.getCurrencyInstance(Locale.of("en", "PH")).format(loanBalance));
+            paymentSchedule.add(currency.format(loanBalance));
             numberOfPaymentsMade++;
 
         }
