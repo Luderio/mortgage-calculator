@@ -50,7 +50,7 @@ public class MortgageReport {
     }
 
     public void printMonthlyPayments() {
-        double monthlyPayments = calculator.calculateMortgage();
+        String monthlyPayments = calculator.calculateMortgage();
         System.out.println("------------------------------------ \n Monthly Payments: " + monthlyPayments);
     }
 
