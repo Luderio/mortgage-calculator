@@ -5,10 +5,18 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class MortgageUtils {
+public class MortgageReport {
 
     private static final ConsoleLogger log = new ConsoleLogger();
     private static final Scanner scanner = new Scanner(System.in);
+    private MortgageCalculator calculator;
+
+    public MortgageReport(MortgageCalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public MortgageReport() {
+    }
 
     public static Number inputValidator(int min, int max, String fieldName) {
         while (true) {
@@ -44,7 +52,12 @@ public class MortgageUtils {
         }
     }
 
-    public static String getPaymentSchedule(double principal, float annualInterest, byte period) {
+    public void getMonthlyPayments() {
+        String monthlyPayments = calculator.calculateMortgage();
+        System.out.println("------------------------------------ \n Monthly Payments: " + monthlyPayments);
+    }
+
+    public void getPaymentSchedule() {
         /**
          * formula: B = L[(1+c)^n - (1+c)^p]/[(1+c)^n-1]
          * where:
@@ -58,14 +71,14 @@ public class MortgageUtils {
         final byte MONTHS_IN_A_YEAR = 12;
         final byte PERCENT = 100;
 
-        double monthlyInterest = (annualInterest / PERCENT) / MONTHS_IN_A_YEAR;
-        int numberOfPayments = period * MONTHS_IN_A_YEAR;
+        double monthlyInterest = (calculator.getAnnualInterest() / PERCENT) / MONTHS_IN_A_YEAR;
+        int numberOfPayments = calculator.getPeriod() * MONTHS_IN_A_YEAR;
         int numberOfPaymentsMade = 1;
         ArrayList<String> paymentSchedule = new ArrayList<>();
         StringBuilder result = new StringBuilder();
 
         while (numberOfPaymentsMade < numberOfPayments + 1) {
-            double loanBalance = principal * (Math.pow((1 + monthlyInterest), numberOfPayments) - Math.pow((1 + monthlyInterest), numberOfPaymentsMade)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
+            double loanBalance = calculator.getPrincipal() * (Math.pow((1 + monthlyInterest), numberOfPayments) - Math.pow((1 + monthlyInterest), numberOfPaymentsMade)) / (Math.pow((1 + monthlyInterest), numberOfPayments) - 1);
             paymentSchedule.add(NumberFormat.getCurrencyInstance(Locale.of("en", "PH")).format(loanBalance));
              numberOfPaymentsMade++;
 
@@ -75,11 +88,8 @@ public class MortgageUtils {
             result.append("payment ").append(i + 1).append(": ").append(paymentSchedule.toArray()[i]).append("\n");
         }
 
-        return "------------------------------------ \n Payment Schedule: \n------------------------------------ \n".concat(result.toString());
+        System.out.println("------------------------------------ \n Payment Schedule: \n------------------------------------ \n".concat(result.toString()));
     }
 
-    public static String getMonthlyPayments(double principal, float annualInterest, byte period) {
-        String monthlyPayments = MortgageCalculator.calculateMortgage(principal, annualInterest, period);
-        return "------------------------------------ \n Monthly Payments: " + monthlyPayments;
-    }
+
 }
