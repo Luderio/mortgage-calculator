@@ -5,10 +5,9 @@ import java.util.Scanner;
 public class MortgageUtils {
 
     private static final ConsoleLogger log = new ConsoleLogger();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static Number inputValidator(int min, int max, String fieldName) {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.print(fieldName + ": ");
             switch (fieldName) {
