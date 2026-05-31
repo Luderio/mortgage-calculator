@@ -12,15 +12,19 @@ public class MortgageCalculator {
     private double principal;
     private float annualInterest;
     private byte period;
+    private String language;
+    private String country;
 
-    private MortgageCalculator(double principal, float annualInterest, byte period) {
+    private MortgageCalculator(double principal, float annualInterest, byte period, String language, String country) {
         this.principal = principal;
         this.annualInterest = annualInterest;
         this.period = period;
+        this.currency = NumberFormat.getCurrencyInstance(Locale.of(language, country));
     }
 
     public MortgageCalculator(String language, String country) {
-        this.currency = NumberFormat.getCurrencyInstance(Locale.of(language, country));
+        this.language = language;
+        this.country = country;
     }
 
     public String calculateMortgage() {
@@ -64,7 +68,7 @@ public class MortgageCalculator {
         float annualInterest = (float) MortgageReport.inputValidator(0, 30, "Annual Interest");
         byte period = (byte) MortgageReport.inputValidator(1, 30, "Period (in years)");
 
-        var mortgage = new MortgageCalculator(principal, annualInterest, period);
+        var mortgage = new MortgageCalculator(principal, annualInterest, period, language, country);
         var mortgageDetails = new MortgageReport(mortgage);
 
         mortgageDetails.printMonthlyPayments();
